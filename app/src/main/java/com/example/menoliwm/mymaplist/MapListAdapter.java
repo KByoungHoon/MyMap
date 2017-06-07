@@ -60,8 +60,6 @@ public class MapListAdapter<M> extends ArrayAdapter<MapInfo> {
         });
 
         checkBox.setChecked(mapInfo.getIsMapView());
-
-
         return convertView;
     }
 }

@@ -1,15 +1,12 @@
 package com.example.menoliwm.mymaplist;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.support.v4.app.FragmentActivity;
-import android.widget.FrameLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,7 +16,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -103,12 +99,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }else
            mapList = dbAccess.getMapListDB();
 
-
         adapter = new MapListAdapter<MapInfo>(this, 0, mapList);
 
         mapListView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         registerForContextMenu(mapListView);
-
         super.onResume();
     }
 
@@ -231,6 +226,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mapInfo.setLongitude(addLongitude);
 
                 httpManager.addAndroidList(mapInfo);
+                adapter.notifyDataSetChanged();
                 break;
 
             case 1:
@@ -243,8 +239,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mapInfo.setIsMapView(Boolean.parseBoolean(intent.getStringExtra("isMapView")));
 
                 httpManager.editAndroidList(mapInfo);
+                adapter.notifyDataSetChanged();
                 break;
         }
-        adapter.notifyDataSetChanged();
     }
 }

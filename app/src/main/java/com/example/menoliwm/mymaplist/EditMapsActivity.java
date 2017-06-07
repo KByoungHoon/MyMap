@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 public class EditMapsActivity extends Activity {
 
+    Boolean boolIsMapView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,7 @@ public class EditMapsActivity extends Activity {
         final String longitude = intent.getStringExtra("longitude");
         final String isMapView = intent.getStringExtra("isMapView");
 
-        final Boolean boolIsMapView = Boolean.parseBoolean(isMapView);
+        boolIsMapView = Boolean.parseBoolean(isMapView);
 
         final EditText editTitle = (EditText) findViewById(R.id.edit_title);
         final EditText editAddress = (EditText) findViewById(R.id.edit_address);
@@ -49,35 +51,35 @@ public class EditMapsActivity extends Activity {
 
         if(boolIsMapView){
             edit_checkBox.setChecked(boolIsMapView);
-    }
+        }
 
         edit_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (edit_checkBox.isChecked()){
+                    boolIsMapView = true;
+                } else {
+                    boolIsMapView = false;
+                }
+            }
+        });
+
+        final Button edit_btn = (Button) findViewById(R.id.edit_btn);
+        edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 final Intent intent = new Intent();
 
-                if (edit_checkBox.isChecked()){
-                    intent.putExtra("isMapView", "true");
-                } else {
-                    intent.putExtra("isMapView", "false");
-                }
+                intent.putExtra("id", id);
+                intent.putExtra("userid", userid);
+                intent.putExtra("title", editTitle.getText().toString());
+                intent.putExtra("address", editAddress.getText().toString());
+                intent.putExtra("latitude", editLatitude.getText().toString());
+                intent.putExtra("longitude", editLongitude.getText().toString());
+                intent.putExtra("isMapView", String.valueOf(boolIsMapView));
 
-                final Button edit_btn = (Button) findViewById(R.id.edit_btn);
-                edit_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        intent.putExtra("id", id);
-                        intent.putExtra("userid", userid);
-                        intent.putExtra("title", editTitle.getText().toString());
-                        intent.putExtra("address", editAddress.getText().toString());
-                        intent.putExtra("latitude", editLatitude.getText().toString());
-                        intent.putExtra("longitude", editLongitude.getText().toString());
-
-                        setResult(1, intent);
-                        finish();
-                    }
-                });
+                setResult(1, intent);
+                finish();
             }
         });
     }

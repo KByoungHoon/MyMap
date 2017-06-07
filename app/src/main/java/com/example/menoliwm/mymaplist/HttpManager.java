@@ -23,7 +23,6 @@ public class HttpManager {
             @Override
             public void run() {
                 try {
-                    //URL url = new URL("http://169.254.92.16:8080/MapProject/List?phone=android");
                     URL url = new URL("http://192.168.11.13:8080/MapProject/List?phone=android");
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     str = InputStreamToString(con.getInputStream());
@@ -55,8 +54,7 @@ public class HttpManager {
                     sbParams.append("&");
                     sbParams.append("longitude").append("=").append(mapInfo.getLongitude());
 
-                    //URL url = new URL("http://169.254.92.16:8080/MapProject/AndAdd");
-                    URL url = new URL("http://192.168.11.13:8080/MapProject/AndAdd");
+                    URL url = new URL("http://192.168.11.13:8080/MapProject/Add");
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
                     con.setRequestMethod("POST");
@@ -105,7 +103,6 @@ public class HttpManager {
                     sbParams.append("&");
                     sbParams.append("isMapView").append("=").append(mapInfo.getIsMapView());
 
-                    //URL url = new URL("http://169.254.92.16:8080/MapProject/Edit");
                     URL url = new URL("http://192.168.11.13:8080/MapProject/Edit");
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
@@ -127,6 +124,7 @@ public class HttpManager {
                     while ((line = reader.readLine()) != null) {
                         page += line;
                     }
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -144,7 +142,6 @@ public class HttpManager {
 
                     sbParams.append("id").append("=").append(id);
 
-                    //URL url = new URL("http://169.254.92.16:8080/MapProject/Delete");
                     URL url = new URL("http://192.168.11.13:8080/MapProject/Delete");
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
